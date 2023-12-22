@@ -1,9 +1,8 @@
-
 import 'package:flutter/material.dart';
 import 'package:office_archiving/constants.dart';
 
-class CostomGridWidgetApp extends StatelessWidget {
-  const CostomGridWidgetApp({
+class CustomGridWidgetApp extends StatelessWidget {
+  const CustomGridWidgetApp({
     super.key,
   });
 

@@ -1,9 +1,8 @@
-
 import 'package:flutter/material.dart';
 import 'package:office_archiving/constants.dart';
 
-class CostomAppBarWidgetApp extends StatelessWidget {
-  const CostomAppBarWidgetApp({
+class CustomAppBarWidgetApp extends StatelessWidget {
+  const CustomAppBarWidgetApp({
     super.key,
   });
 
@@ -13,7 +12,7 @@ class CostomAppBarWidgetApp extends StatelessWidget {
       title: Text(officeArchiving),
       // actions: [],
       centerTitle: true,
-       floating: true,
+      floating: true,
       snap: true,
     );
   }
