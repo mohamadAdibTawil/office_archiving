@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:office_archiving/constants.dart';
 
 class CustomGridWidgetApp extends StatelessWidget {
+  final void Function()? onTap;
+  final Widget? child;
   const CustomGridWidgetApp({
     super.key,
+    this.onTap, this.child,
   });
-
   @override
   Widget build(BuildContext context) {
     return SliverGrid(
@@ -15,24 +17,8 @@ class CustomGridWidgetApp extends StatelessWidget {
       delegate: SliverChildBuilderDelegate(
         (context, index) {
           return GestureDetector(
-            onTap: () {},
-            child: const Card(
-              margin: EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-              child: Center(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
-                  child: Text(
-                    testText,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 5,
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ),
-              ),
-            ),
+            onTap: onTap,
+            child: child,
           );
         },
       ),
