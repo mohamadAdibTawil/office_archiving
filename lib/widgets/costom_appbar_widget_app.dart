@@ -13,6 +13,8 @@ class CostomAppBarWidgetApp extends StatelessWidget {
       title: Text(officeArchiving),
       // actions: [],
       centerTitle: true,
+       floating: true,
+      snap: true,
     );
   }
 }

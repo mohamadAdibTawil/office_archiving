@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:office_archiving/constants.dart';
 import 'package:office_archiving/pages/home_screen.dart';
 
 class SplashView extends StatefulWidget {
@@ -35,7 +36,7 @@ class _SplashViewState extends State<SplashView>
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Image.asset(
-            'assets/images/office_image_one.png',
+            kOfficePicure,
             width: 200,
             height: 200,
           ),
