@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:office_archiving/pages/splash.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,15 +15,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const HomeScreen(),
+      home: const SplashView(),
     );
-  }
-}
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container();
   }
 }
