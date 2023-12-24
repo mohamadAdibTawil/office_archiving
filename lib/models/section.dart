@@ -5,6 +5,6 @@ class Section extends HiveObject{
   @HiveField(0)
   late String name;
   @HiveField(1)
-  late String id;
+  late int id;
    Section({required this.name, required this.id});
 }

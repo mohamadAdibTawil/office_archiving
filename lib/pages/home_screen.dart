@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:office_archiving/functions/navigator.dart';
+import 'package:office_archiving/models/section.dart';
 import 'package:office_archiving/pages/section_screen.dart';
 import 'package:office_archiving/widgets/custom_appbar_widget_app.dart';
 import 'package:office_archiving/widgets/custom_floating_action_button_widget_app.dart';
@@ -16,10 +19,14 @@ class HomeScreen extends StatelessWidget {
       body: CustomScrollView(slivers: [
         const CustomAppBarWidgetApp(),
         CustomGridWidgetApp(
-            onTap: () {
-              navigateToSectionScreen(context);
-            },
-            child: const SectionGridITemBody()),
+          onTap: () {
+            navigateToSectionScreen(context);
+          
+          },
+          child: SectionGridITemBody(
+            section: Section(name: 'Section 1', id: 'Section 1'.hashCode),
+          ),
+        ),
       ]),
     );
   }

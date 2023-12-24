@@ -8,11 +8,12 @@ class SectionScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return  Scaffold(
       floatingActionButton: CustomFloatingActionButtonWidgetApp(),
       body: CustomScrollView(slivers: [
         CustomAppBarWidgetApp(),
-        CustomGridWidgetApp(child: Card()),
+        CustomGridWidgetApp(onTap: () {  },
+        child: Card()),
       ]),
     );
   }

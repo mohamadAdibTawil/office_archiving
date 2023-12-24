@@ -18,7 +18,7 @@ class SectionAdapter extends TypeAdapter<Section> {
     };
     return Section(
       name: fields[0] as String,
-      id: fields[1] as String,
+      id: fields[1] as int,
     );
   }
 

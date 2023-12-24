@@ -7,3 +7,4 @@ const Color kWhiteColor = Color(0xffffffff);
 const String kOfficePicure = 'assets/images/office_image_one.png';
 const testText =
     'office Archiving office Archiving office Archiving office Archiving office Archiving office Archiving office Archiving office Archiving office Archiving office Archiving office Archiving office Archiving office Archiving office Archiving office Archiving office Archiving office Archiving ';
+const kSectionBox = 'SectionBox';
