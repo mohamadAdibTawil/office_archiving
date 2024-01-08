@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:office_archiving/constants.dart';
+import 'package:office_archiving/cubit/cubit/section_cubit.dart';
 
-class CustomAppBarWidgetApp extends StatelessWidget {
+class CustomAppBarWidgetApp extends StatelessWidget
+    implements PreferredSizeWidget {
   const CustomAppBarWidgetApp({
     super.key,
+    required this.sectionCubit,
   });
-
+  final SectionCubit sectionCubit;
   @override
   Widget build(BuildContext context) {
-    return const SliverAppBar(
-      title: Text(officeArchiving),
-      // actions: [],
+    return AppBar(
+      title: const Text(officeArchiving),
       centerTitle: true,
-      floating: true,
-      snap: true,
     );
   }
+
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }

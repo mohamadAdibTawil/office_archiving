@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:office_archiving/constants.dart';
 import 'package:office_archiving/pages/home_screen.dart';
-
+import 'package:office_archiving/constants.dart';
 class SplashView extends StatefulWidget {
   const SplashView({Key? key}) : super(key: key);
 
@@ -92,7 +92,7 @@ class SlidingText extends StatelessWidget {
           return SlideTransition(
             position: slidingAnimation,
             child: const Text(
-              'Office Archiving',
+              officeArchiving,
               textAlign: TextAlign.center,
               style: TextStyle(fontWeight: FontWeight.w400, fontSize: 24),
             ),
