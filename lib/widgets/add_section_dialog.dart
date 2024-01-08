@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:office_archiving/cubit/cubit/section_cubit.dart';
+import 'package:office_archiving/cubit/section_cubit/section_cubit.dart';
 
 class AddSectionDialog extends StatefulWidget {
   final SectionCubit sectionCubit;

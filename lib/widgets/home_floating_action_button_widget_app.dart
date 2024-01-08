@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:office_archiving/constants.dart';
-import 'package:office_archiving/cubit/cubit/section_cubit.dart';
+import 'package:office_archiving/cubit/section_cubit/section_cubit.dart';
 import 'package:office_archiving/models/section.dart';
 import 'package:office_archiving/widgets/add_section_dialog.dart';
 

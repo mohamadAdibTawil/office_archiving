@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:office_archiving/constants.dart';
-import 'package:office_archiving/cubit/cubit/section_cubit.dart';
+import 'package:office_archiving/cubit/section_cubit/section_cubit.dart';
 import 'package:office_archiving/models/item.dart';
 import 'package:office_archiving/models/section.dart';
 import 'package:office_archiving/pages/splash.dart';
@@ -12,8 +12,8 @@ void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(SectionAdapter());
   await Hive.openBox<Section>(kSectionBox);
-  Hive.registerAdapter(SectionItemAdapter());
-  await Hive.openBox<SectionItem>(kItemSectionBox);
+  Hive.registerAdapter(ItemSectionAdapter());
+  await Hive.openBox<ItemSection>(kItemSectionBox);
 
   runApp(const MyApp());
 }

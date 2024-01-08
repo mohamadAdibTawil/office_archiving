@@ -6,23 +6,23 @@ part of 'item.dart';
 // TypeAdapterGenerator
 // **************************************************************************
 
-class SectionItemAdapter extends TypeAdapter<SectionItem> {
+class ItemSectionAdapter extends TypeAdapter<ItemSection> {
   @override
   final int typeId = 1;
 
   @override
-  SectionItem read(BinaryReader reader) {
+  ItemSection read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return SectionItem()
+    return ItemSection()
       ..itemName = fields[0] as String
       ..file = fields[1] as File;
   }
 
   @override
-  void write(BinaryWriter writer, SectionItem obj) {
+  void write(BinaryWriter writer, ItemSection obj) {
     writer
       ..writeByte(2)
       ..writeByte(0)
@@ -37,7 +37,7 @@ class SectionItemAdapter extends TypeAdapter<SectionItem> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is SectionItemAdapter &&
+      other is ItemSectionAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
 import 'package:office_archiving/constants.dart';
-import 'package:office_archiving/cubit/cubit/section_cubit.dart';
+import 'package:office_archiving/cubit/section_cubit/section_cubit.dart';
 import 'package:office_archiving/models/section.dart';
 import 'package:office_archiving/pages/section_screen.dart';
 import 'package:office_archiving/widgets/custom_appbar_widget_app.dart';
