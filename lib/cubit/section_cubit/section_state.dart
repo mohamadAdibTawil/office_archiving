@@ -1,36 +1,40 @@
 part of 'section_cubit.dart';
 
 @immutable
-sealed class SectionState {}
+abstract class SectionState {
+  const SectionState();
+}
 
-final class SectionInitial extends SectionState {}
+class SectionInitial extends SectionState {
+  const SectionInitial();
+}
 
-final class FetchSectionsSuccess extends SectionState {
+class SectionsLoaded extends SectionState {
   final List<Section> sections;
 
-  FetchSectionsSuccess(this.sections);
+  const SectionsLoaded(this.sections);
 }
 
-final class SectionsSelected extends SectionState {
-  final List<Section> selectedSections;
+class SectionError extends SectionState {
+  final String error;
 
-  SectionsSelected(this.selectedSections);
+  const SectionError(this.error);
 }
-final class AddSection extends SectionState {
-  final Section section;
+//  Future<void> updateSection(Section section) async {
+//     final Database db = await database;
+//     await db.update(
+//       sectionTable,
+//       section.toMap(),
+//       where: 'id = ?',
+//       whereArgs: [section.id],
+//     );
+//   }
 
-  AddSection(this.section);
-}
-
-final class RemoveSection extends SectionState {
-  final Section section;
-
-  RemoveSection(this.section);
-}
-
-final class SectionRenamed extends SectionState {
-  final int sectionId;
-  final String newName;
-
-  SectionRenamed({required this.sectionId, required this.newName});
-}
+//   Future<void> deleteSection(int sectionId) async {
+//     final Database db = await database;
+//     await db.delete(
+//       sectionTable,
+//       where: 'id = ?',
+//       whereArgs: [sectionId],
+//     );
+//   }

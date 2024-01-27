@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 import 'package:office_archiving/constants.dart';
 import 'package:office_archiving/cubit/section_cubit/section_cubit.dart';
 import 'package:office_archiving/models/section.dart';
@@ -21,24 +20,21 @@ class HomeFloatingActionButtonWidgetApp extends StatefulWidget {
 
 class _HomeFloatingActionButtonWidgetAppState
     extends State<HomeFloatingActionButtonWidgetApp> {
-  late Box<Section> sectionBox;
+  // late Box<Section> sectionBox;
   @override
   void initState() {
     super.initState();
-    sectionBox = Hive.box<Section>(kSectionBox);
+    // sectionBox = Hive.box<Section>(kSectionBox);
   }
 
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
       onPressed: () async {
-        log('sectionBox:$sectionBox');
-        log('sectionBox.length :${sectionBox.length}');
-        log('sectionBox.isEmpty :${sectionBox.isEmpty}');
-
+      
         _showAddSectionDialog(context);
       },
-      child: const Icon(Icons.add),
+      child: const Icon(Icons.my_library_add_rounded),
     );
   }
 

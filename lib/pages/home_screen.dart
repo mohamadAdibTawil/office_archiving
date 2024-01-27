@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hive/hive.dart';
 import 'package:office_archiving/constants.dart';
 import 'package:office_archiving/cubit/section_cubit/section_cubit.dart';
 import 'package:office_archiving/models/section.dart';
@@ -48,7 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
               log('SectionInitial: $state');
               sectionCubit.fetchSections();
               return const Center(child: CircularProgressIndicator());
-            } else if (state is FetchSectionsSuccess) {
+            } else if (state is SectionsLoaded) {
               log('FetchSectionsSuccess: $state');
               // sections.addAll(state.sections);
 
@@ -143,17 +142,17 @@ class _HomeScreenState extends State<HomeScreen> {
     );
 
     if (newName != null) {
-      final int sectionIndex = Hive.box<Section>(kSectionBox)
-          .values
-          .toList()
-          .indexWhere((s) => s.id == section.id);
-      if (sectionIndex != -1) {
-        sectionCubit.renameSection(sectionIndex, newName);
-      }
+      // final int sectionIndex = Hive.box<Section>(kSectionBox)
+      //     .values
+      //     .toList()
+      //     .indexWhere((s) => s.id == section.id);
+      // if (sectionIndex != -1) {
+      //   sectionCubit.renameSection(sectionIndex, newName);
+      // }
     }
   }
 
   void _handleDeleteSection(Section section) {
-    sectionCubit.removeSection(section);
+    sectionCubit.deleteSection(section.id);
   }
 }

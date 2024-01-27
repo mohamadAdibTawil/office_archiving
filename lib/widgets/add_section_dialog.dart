@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:office_archiving/cubit/section_cubit/section_cubit.dart';
+import 'package:office_archiving/models/section.dart';
 
 class AddSectionDialog extends StatefulWidget {
   final SectionCubit sectionCubit;
@@ -38,10 +39,11 @@ class _AddSectionDialogState extends State<AddSectionDialog> {
               ElevatedButton(
                 onPressed: () {
                   if (_sectionNameController.text.isNotEmpty) {
-
                     setState(() {
-                      widget.sectionCubit
-                          .addSection(_sectionNameController.text);
+                      widget.sectionCubit.addSection(Section(
+                          name: _sectionNameController.text,
+                          id: (DateTime.now().millisecondsSinceEpoch) ~/
+                              1000000));
                     });
                     Navigator.pop(context);
                   }

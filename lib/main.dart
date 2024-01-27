@@ -1,19 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:office_archiving/constants.dart';
+import 'package:office_archiving/cubit/item_section_cubit/item_section_cubit.dart';
 import 'package:office_archiving/cubit/section_cubit/section_cubit.dart';
-import 'package:office_archiving/models/item.dart';
-import 'package:office_archiving/models/section.dart';
 import 'package:office_archiving/pages/splash.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'service/sqlite_service.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Hive.initFlutter();
-  Hive.registerAdapter(SectionAdapter());
-  await Hive.openBox<Section>(kSectionBox);
-  Hive.registerAdapter(ItemSectionAdapter());
-  await Hive.openBox<ItemSection>(kItemSectionBox);
+ 
 
   runApp(const MyApp());
 }
@@ -24,7 +20,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => SectionCubit()..fetchSections()),
+        BlocProvider(
+            create: (context) =>
+                SectionCubit(databaseHelper: DatabaseProvider.instance)
+                  ..fetchSections()),
+        BlocProvider(
+            create: (context) => ItemSectionCubit()..fetchItemsSections()),
       ],
       child: MaterialApp(
         title: officeArchiving,
@@ -33,8 +34,7 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
           fontFamily: kFontGTSectraFine,
         ),
-        home: const Directionality(
-            textDirection: TextDirection.rtl, child: SplashView()),
+        home: const SplashView(),
       ),
     );
   }

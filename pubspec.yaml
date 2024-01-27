@@ -35,14 +35,18 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
-  hive_flutter: ^1.1.0
-  hive: ^2.2.3
   flutter_bloc: ^8.1.3
+  image_picker: ^1.0.6
+  path_provider: ^2.1.2
+  file_picker: ^6.1.1
+  path: ^1.8.3
+  flutter_staggered_animations: ^1.1.1
+  sqflite: ^2.3.0
+  collection: ^1.18.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
   build_runner: ^2.3.3
-  hive_generator: ^2.0.0
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -55,6 +59,14 @@ dev_dependencies:
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter packages.
+flutter_icons:
+  ios: true
+  android: true
+  image_path: "assets/images/Logo_office.png"
+  remove_alpha_ios: true
+  adaptive_icon_foreground: "assets/images/Logo_office.png"
+  adaptive_icon_background: "#FFFFFF"
+
 flutter:
 
   # The following line ensures that the Material Icons font is
