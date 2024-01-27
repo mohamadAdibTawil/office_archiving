@@ -8,8 +8,9 @@ import 'package:office_archiving/models/section.dart';
 import 'package:office_archiving/pages/section_screen.dart';
 import 'package:office_archiving/widgets/custom_appbar_widget_app.dart';
 import 'package:office_archiving/widgets/home_floating_action_button_widget_app.dart';
-import 'package:office_archiving/widgets/custom_grid_widget_app.dart';
 import 'package:office_archiving/widgets/rename_section_dailog.dart';
+
+import '../cubit/section_cubit/section_state.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -45,10 +46,10 @@ class _HomeScreenState extends State<HomeScreen> {
           builder: (context, state) {
             if (state is SectionInitial) {
               log('SectionInitial: $state');
-              sectionCubit.fetchSections();
+              sectionCubit.getSections();
               return const Center(child: CircularProgressIndicator());
-            } else if (state is SectionsLoaded) {
-              log('FetchSectionsSuccess: $state');
+            } else if (state is SectionLoaded) {
+              log('getSectionsSuccess: $state');
               // sections.addAll(state.sections);
 
               return SafeArea(

@@ -9,7 +9,6 @@ import 'service/sqlite_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
- 
 
   runApp(const MyApp());
 }
@@ -22,8 +21,7 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(
             create: (context) =>
-                SectionCubit(databaseHelper: DatabaseProvider.instance)
-                  ..fetchSections()),
+                SectionCubit(DatabaseProvider.instance)..getSections()),
         BlocProvider(
             create: (context) => ItemSectionCubit()..fetchItemsSections()),
       ],

@@ -1,6 +1,7 @@
-part of 'section_cubit.dart';
+import 'package:flutter/foundation.dart';
 
-@immutable
+import '../../models/section.dart';
+
 abstract class SectionState {
   const SectionState();
 }
@@ -9,32 +10,38 @@ class SectionInitial extends SectionState {
   const SectionInitial();
 }
 
-class SectionsLoaded extends SectionState {
+class SectionLoading extends SectionState {
+  const SectionLoading();
+}
+
+class SectionLoaded extends SectionState {
   final List<Section> sections;
 
-  const SectionsLoaded(this.sections);
+  const SectionLoaded(this.sections);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is SectionLoaded && listEquals(other.sections, sections);
+  }
+
+  @override
+  int get hashCode => sections.hashCode;
 }
 
 class SectionError extends SectionState {
-  final String error;
+  final String message;
 
-  const SectionError(this.error);
+  const SectionError(this.message);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is SectionError && other.message == message;
+  }
+
+  @override
+  int get hashCode => message.hashCode;
 }
-//  Future<void> updateSection(Section section) async {
-//     final Database db = await database;
-//     await db.update(
-//       sectionTable,
-//       section.toMap(),
-//       where: 'id = ?',
-//       whereArgs: [section.id],
-//     );
-//   }
-
-//   Future<void> deleteSection(int sectionId) async {
-//     final Database db = await database;
-//     await db.delete(
-//       sectionTable,
-//       where: 'id = ?',
-//       whereArgs: [sectionId],
-//     );
-//   }

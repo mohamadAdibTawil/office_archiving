@@ -39,11 +39,12 @@ class _SectionScreenState extends State<SectionScreen> {
   List<int> selectedIndices = [];
   late ItemSectionCubit itemSectionCubit;
   late SectionCubit sectionCubit;
+    late DatabaseProvider databaseProvider;
   @override
   void initState() {
     itemSectionCubit = context.read<ItemSectionCubit>();
-    sectionCubit = SectionCubit(databaseHelper: DatabaseProvider.instance);
-    sectionCubit.fetchSections();
+    sectionCubit = SectionCubit(databaseProvider);
+    sectionCubit.getSections();
     super.initState();
   }
 

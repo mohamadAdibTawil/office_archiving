@@ -1,80 +1,131 @@
-// import 'dart:developer';
-
-// import 'package:bloc/bloc.dart';
-// import 'package:meta/meta.dart';
-// import 'package:office_archiving/constants.dart';
-// import 'package:office_archiving/models/section.dart';
-// import 'package:hive/hive.dart';
-
-// part 'section_state.dart';
-
-import 'package:bloc/bloc.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:office_archiving/cubit/section_cubit/section_state.dart';
 import 'package:office_archiving/models/section.dart';
-import 'package:sqflite/sqflite.dart';
 
 import '../../service/sqlite_service.dart';
 
-part 'section_state.dart';
-
 class SectionCubit extends Cubit<SectionState> {
-  final DatabaseProvider databaseHelper;
+  final DatabaseProvider _databaseProvider;
 
-  SectionCubit({required this.databaseHelper}) : super(const SectionInitial());
+  SectionCubit( this._databaseProvider): super(const SectionInitial());
 
-  void fetchSections() async {
+  // SectionCubit(this._databaseProvider,
+  //     {required DatabaseProvider databaseHelper})
+  //     
+
+  Future<void> getSections() async {
+    emit(const SectionLoading());
     try {
-      final sections = await databaseHelper.getSections();
-      emit(SectionsLoaded(sections));
+      final sections = await _databaseProvider.getSections();
+      emit(SectionLoaded(sections));
     } catch (e) {
-      emit(SectionError('Error fetching sections: $e'));
+      emit(SectionError('Failed to load sections: $e'));
     }
   }
 
-  void addSection(Section section) async {
+  Future<void> addSection(Section section) async {
     try {
-      await databaseHelper.insertSection(section);
-      fetchSections(); // Reload sections after adding a new one
+      await _databaseProvider.insertSection(section);
+      emit(SectionLoaded([...(state as SectionLoaded).sections, section]));
     } catch (e) {
-      emit(SectionError('Error adding section: $e'));
+      emit(SectionError('Failed to add section: $e'));
     }
   }
 
-  void updateSection(Section section) async {
+  Future<void> updateSection(Section section) async {
     try {
-      await databaseHelper.updateSection(section);
-      fetchSections(); // Reload sections after updating
+      await _databaseProvider.updateSection(section);
+      final updatedSections = (state as SectionLoaded)
+          .sections
+          .map((s) => s.id == section.id ? section : s)
+          .toList();
+      emit(SectionLoaded(updatedSections));
     } catch (e) {
-      emit(SectionError('Error updating section: $e'));
+      emit(SectionError('Failed to update section: $e'));
     }
   }
 
-  void deleteSection(int sectionId) async {
+  Future<void> deleteSection(int sectionId) async {
     try {
-      await databaseHelper.deleteSection(sectionId);
-      fetchSections(); // Reload sections after deleting
+      await _databaseProvider.deleteSection(sectionId);
+      final updatedSections = (state as SectionLoaded)
+          .sections
+          .where((s) => s.id != sectionId)
+          .toList();
+      emit(SectionLoaded(updatedSections));
     } catch (e) {
-      emit(SectionError('Error deleting section: $e'));
-    }
-  }
-
-  void renameSection(int index, String newName) {
-    final currentState = state;
-    if (currentState is SectionsLoaded) {
-      final updatedSections = List<Section>.from(currentState.sections);
-      updatedSections[index] = updatedSections[index].copyWith(name: newName);
-      emit(SectionsLoaded(updatedSections));
+      emit(SectionError('Failed to delete section: $e'));
     }
   }
 }
+
+// import 'package:bloc/bloc.dart';
+// import 'package:flutter/foundation.dart';
+// import 'package:office_archiving/models/section.dart';
+// import 'package:sqflite/sqflite.dart';
+
+// import '../../service/sqlite_service.dart';
+
+// part 'section_state.dart';
+
+// class SectionCubit extends Cubit<SectionState> {
+//   final DatabaseProvider databaseHelper;
+
+//   SectionCubit({required this.databaseHelper}) : super(const SectionInitial());
+
+//   void getSections() async {
+//     try {
+//       final sections = await databaseHelper.getSections();
+//       emit(SectionsLoaded(sections));
+//     } catch (e) {
+//       emit(SectionError('Error fetching sections: $e'));
+//     }
+//   }
+
+//   void addSection(Section section) async {
+//     try {
+//       await databaseHelper.insertSection(section);
+//       getSections(); // Reload sections after adding a new one
+//     } catch (e) {
+//       emit(SectionError('Error adding section: $e'));
+//     }
+//   }
+
+//   void updateSection(Section section) async {
+//     try {
+//       await databaseHelper.updateSection(section);
+//       getSections(); // Reload sections after updating
+//     } catch (e) {
+//       emit(SectionError('Error updating section: $e'));
+//     }
+//   }
+
+//   void deleteSection(int sectionId) async {
+//     try {
+//       await databaseHelper.deleteSection(sectionId);
+//       getSections(); // Reload sections after deleting
+//     } catch (e) {
+//       emit(SectionError('Error deleting section: $e'));
+//     }
+//   }
+
+//   void renameSection(int index, String newName) {
+//     final currentState = state;
+//     if (currentState is SectionsLoaded) {
+//       final updatedSections = List<Section>.from(currentState.sections);
+//       updatedSections[index] = updatedSections[index].copyWith(name: newName);
+//       emit(SectionsLoaded(updatedSections));
+//     }
+//   }
+// }
 
 // class SectionCubit extends Cubit<SectionState> {
 //   SectionCubit() : super(SectionInitial());
 
 //   final Box<Section> sectionBox = Hive.box<Section>(kSectionBox);
 // ////////////////////////////////////////////////
-//   void fetchSections() {
-//     emit(FetchSectionsSuccess(sectionBox.values.toList()));
+//   void getSections() {
+//     emit(getSectionsSuccess(sectionBox.values.toList()));
 //   }
 // ////////////////////////////////////////////////
 
@@ -85,7 +136,7 @@ class SectionCubit extends Cubit<SectionState> {
 //     sectionBox.add(newSection);
 //     emit(AddSection(newSection));
 
-//     fetchSections();
+//     getSections();
 //   }
 // ////////////////////////////////////////////////
 
@@ -93,7 +144,7 @@ class SectionCubit extends Cubit<SectionState> {
 //     section.delete();
 //     emit(RemoveSection(section));
 
-//     fetchSections();
+//     getSections();
 //   }
 
 // ////////////////////////////////////////////////
@@ -108,7 +159,7 @@ class SectionCubit extends Cubit<SectionState> {
 //       }
 //       sectionid.name = newName;
 //       sectionid.save();
-//       fetchSections();
+//       getSections();
 //     }
 //   }
 
