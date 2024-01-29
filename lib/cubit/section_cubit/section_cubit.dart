@@ -5,27 +5,44 @@ import 'package:office_archiving/models/section.dart';
 import '../../service/sqlite_service.dart';
 
 class SectionCubit extends Cubit<SectionState> {
-  final DatabaseProvider _databaseProvider;
+  final DatabaseService _DatabaseService;
 
-  SectionCubit( this._databaseProvider): super(const SectionInitial());
+  SectionCubit(this._DatabaseService) : super(const SectionInitial());
 
-  // SectionCubit(this._databaseProvider,
-  //     {required DatabaseProvider databaseHelper})
-  //     
-
+  // Future<void> getSections() async {
+  //   emit(const SectionLoading());
+  //   try {
+  //     final sections = await _DatabaseService.getSections();
+  //     emit(SectionLoaded(sections));
+  //   } catch (e) {
+  //     emit(SectionError('Failed to load sections: $e'));
+  //   }
+  // }
   Future<void> getSections() async {
     emit(const SectionLoading());
     try {
-      final sections = await _databaseProvider.getSections();
+      final sections = await _DatabaseService.getSections();
       emit(SectionLoaded(sections));
     } catch (e) {
       emit(SectionError('Failed to load sections: $e'));
     }
   }
 
+  Future<void> logItems() async {
+    try {
+      final items = await _DatabaseService
+          .getItems(); // Assuming you have a method to get items from the database
+      items.forEach((item) {
+        print(item); // Print each item in the log
+      });
+    } catch (e) {
+      print('Failed to load items: $e');
+    }
+  }
+
   Future<void> addSection(Section section) async {
     try {
-      await _databaseProvider.insertSection(section);
+      await _DatabaseService.insertSection(section);
       emit(SectionLoaded([...(state as SectionLoaded).sections, section]));
     } catch (e) {
       emit(SectionError('Failed to add section: $e'));
@@ -34,7 +51,7 @@ class SectionCubit extends Cubit<SectionState> {
 
   Future<void> updateSection(Section section) async {
     try {
-      await _databaseProvider.updateSection(section);
+      await _DatabaseService.updateSection(section);
       final updatedSections = (state as SectionLoaded)
           .sections
           .map((s) => s.id == section.id ? section : s)
@@ -47,7 +64,7 @@ class SectionCubit extends Cubit<SectionState> {
 
   Future<void> deleteSection(int sectionId) async {
     try {
-      await _databaseProvider.deleteSection(sectionId);
+      await _DatabaseService.deleteSection(sectionId);
       final updatedSections = (state as SectionLoaded)
           .sections
           .where((s) => s.id != sectionId)
@@ -69,7 +86,7 @@ class SectionCubit extends Cubit<SectionState> {
 // part 'section_state.dart';
 
 // class SectionCubit extends Cubit<SectionState> {
-//   final DatabaseProvider databaseHelper;
+//   final DatabaseService databaseHelper;
 
 //   SectionCubit({required this.databaseHelper}) : super(const SectionInitial());
 

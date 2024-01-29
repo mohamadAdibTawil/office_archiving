@@ -11,6 +11,7 @@ import 'package:office_archiving/widgets/home_floating_action_button_widget_app.
 import 'package:office_archiving/widgets/rename_section_dailog.dart';
 
 import '../cubit/section_cubit/section_state.dart';
+import '../service/sqlite_service.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -25,9 +26,12 @@ class _HomeScreenState extends State<HomeScreen> {
   List<int> selectedIndices = [];
   late SectionCubit sectionCubit;
   List<int> selectedItems = [];
+  final DatabaseService = DatabaseService.instance;
   @override
   void initState() {
-    sectionCubit = context.read<SectionCubit>();
+    sectionCubit = SectionCubit(DatabaseService); //
+    sectionCubit.getSections();
+    sectionCubit.logItems(); // Call the logItems method
     super.initState();
   }
 
@@ -45,11 +49,14 @@ class _HomeScreenState extends State<HomeScreen> {
         body: BlocBuilder<SectionCubit, SectionState>(
           builder: (context, state) {
             if (state is SectionInitial) {
-              log('SectionInitial: $state');
+              log('Received SectionInitial state');
               sectionCubit.getSections();
+              return const Center(child: Text('SectionInitial'));
+            } else if (state is SectionLoading) {
+              log('Loading sections...');
               return const Center(child: CircularProgressIndicator());
             } else if (state is SectionLoaded) {
-              log('getSectionsSuccess: $state');
+              log('Sections loaded successfully: ${state.sections}');
               // sections.addAll(state.sections);
 
               return SafeArea(
@@ -97,6 +104,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                 ),
               );
+            } else if (state is SectionError) {
+              log('Failed to load sections: ${state.message}');
+              return Center(
+                  child: Text('Failed to load sections: ${state.message}'));
             } else {
               log('else  $state');
               return const Center(child: CircularProgressIndicator());

@@ -61,9 +61,12 @@ class Section {
 
     return other.name == name &&
         other.id == id &&
-        DeepCollectionEquality().equals(other.itemsSection, itemsSection);
+        const DeepCollectionEquality().equals(other.itemsSection, itemsSection);
   }
 
   @override
-  int get hashCode => name.hashCode ^ id.hashCode ^ DeepCollectionEquality().hash(itemsSection);
+  int get hashCode =>
+      name.hashCode ^
+      id.hashCode ^
+      const DeepCollectionEquality().hash(itemsSection);
 }
